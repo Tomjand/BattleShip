@@ -14,11 +14,6 @@ public class Field
 		this.state = state;
 	}
 
-	public void setShip(final Ship ship)
-	{
-		this.ship = ship;
-	}
-
 	public char StateToChar()
 	{
 		switch (this.state)
@@ -34,6 +29,11 @@ public class Field
 			default:
 				return ' ';
 		}
+	}
+
+	public void setShip(final Ship ship)
+	{
+		this.ship = ship;
 	}
 
 	public void setState(final State state)
