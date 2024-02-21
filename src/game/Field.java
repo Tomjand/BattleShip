@@ -40,4 +40,10 @@ public class Field
 	{
 		this.state = state;
 	}
+
+	public State getState()
+	{
+		return state;
+	}
+
 }

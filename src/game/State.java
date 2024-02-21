@@ -1,6 +1,6 @@
 package src.game;
 
-enum State
+public enum State
 {
 	EMPTY, SUNK, HIT, MISS, OCCUPIED
 }

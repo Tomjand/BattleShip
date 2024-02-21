@@ -42,15 +42,6 @@ public abstract class WarShip implements Ship
 	}
 }
 
-class Submarine extends WarShip
-{
-	@Override
-	public int getDecksCount()
-	{
-		return 1;
-	}
-}
-
 class Destroyer extends WarShip
 {
 	@Override

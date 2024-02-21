@@ -1,14 +1,22 @@
 package src.game;
 
+import static src.game.State.*;
+
 public class Board
 {
 	public static final int BOARD_SIZE = 10;
 	private final Field[][] fields = new Field[BOARD_SIZE][BOARD_SIZE];
 
+	private int shipsCount;
+
 	public Board(){
+		//if (BOARD_SIZE < 0 || BOARD_SIZE > 10)
+		//{
+		//	throw new IllegalArgumentException("the range of the board size must be between 1 and 10");
+		//}
 		for(int x = 0; x < BOARD_SIZE; x++){
 			for(int y = 0; y < BOARD_SIZE; y++){
-				fields[x][y] = new Field(x, y, State.EMPTY);
+				fields[x][y] = new Field(x, y, EMPTY);
 			}
 		}
 	}
@@ -54,6 +62,29 @@ public class Board
 
 	private State getRandomValue(final double random)
 	{
-		return (random < 0.2) ? State.HIT : ((random > 0.8) ? State.EMPTY : State.MISS);
+		return (random < 0.2) ? HIT : ((random > 0.8) ? EMPTY : MISS);
+	}
+
+
+	public void addShip(final int x, final int y, final Submarine submarine) throws IllegalMoveException
+	{
+		if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE)
+		{
+			throw new IllegalMoveException("the range of the Ship position must be between 1 and 10");
+		}
+
+		shipsCount++;
+
+		submarine.setOnField(fields[x][y], 0);
+	}
+
+	public int getShipsCount()
+	{
+		return shipsCount;
+	}
+
+	public Field getField(final int x, final int y)
+	{
+		return fields[x][y];
 	}
 }
