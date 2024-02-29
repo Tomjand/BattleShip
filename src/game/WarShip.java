@@ -2,12 +2,17 @@ package src.game;
 
 public abstract class WarShip implements Ship
 {
+	public enum Orientation
+	{
+		HORIZONTAL, VERTICAL
+	}
 	private Orientation orientation;
 	private int hits;
 	private final Field[] occupied;
 
-	public WarShip()
+	public WarShip(final Orientation orientation)
 	{
+		this.orientation = orientation;
 		occupied = new Field[this.getDecksCount()];
 	}
 
@@ -30,10 +35,17 @@ public abstract class WarShip implements Ship
 		}
 	}
 
-	enum Orientation
+	public Orientation getOrientation()
 	{
-		HORIZONTAL, VERTICAL
+		return orientation;
 	}
+
+	public void setOrientation(final Orientation orientation)
+	{
+		this.orientation = orientation;
+	}
+
+
 
 	public void setOnField(final Field field, final int deckNumber){
 		field.setShip(this);
@@ -42,30 +54,17 @@ public abstract class WarShip implements Ship
 	}
 }
 
-class Destroyer extends WarShip
-{
-	@Override
-	public int getDecksCount()
-	{
-		return 2;
-	}
-}
-
 class Cruiser extends WarShip
 {
+	public Cruiser(final Orientation orientation)
+	{
+		super(orientation);
+	}
+
 	@Override
 	public int getDecksCount()
 	{
 		return 3;
-	}
-}
-
-class BattleShip extends WarShip
-{
-	@Override
-	public int getDecksCount()
-	{
-		return 4;
 	}
 }
 

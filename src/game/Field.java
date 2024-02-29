@@ -16,6 +16,7 @@ public class Field
 
 	public char StateToChar()
 	{
+		//to przenisec do enum dodac metode zwaracjaca konkretne znaki
 		switch (this.state)
 		{
 			case EMPTY:

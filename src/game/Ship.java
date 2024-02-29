@@ -9,4 +9,7 @@ interface Ship
 	boolean isSunk();
 
 	void setOnField(Field field, int deckNumber);
+
+	WarShip.Orientation getOrientation();
+
 }
