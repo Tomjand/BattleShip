@@ -28,9 +28,9 @@ public abstract class WarShip implements Ship
 		hits++;
 		if (isSunk())
 		{
-			for (final Field field : occupied)
+			for (int i = 0; i < occupied.length; i++)
 			{
-				field.setState(State.SUNK);
+				occupied[i].setState(State.SUNK);
 			}
 		}
 	}
