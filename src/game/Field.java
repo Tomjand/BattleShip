@@ -20,15 +20,17 @@ public class Field
 		switch (this.state)
 		{
 			case EMPTY:
-				return '.';
+				return ' ';
 			case SUNK:
 				return 'X';
 			case HIT:
 				return 'O';
 			case MISS:
-				return '-';
-			default:
+				return '!';
+			case OCCUPIED:
 				return ' ';
+			default:
+				return '?';
 		}
 	}
 

@@ -176,14 +176,23 @@ public class BoardTest
 		board.shot(1, 1);
 		//when
 
-		//then
 		final Exception exception = assertThrows(IllegalMoveException.class,
 				() -> board.shot(1, 1));
 
-
+		//then
 		final String expectedMessage = "You can't shoot twice in the same field";
 		final String actualMessage = exception.getMessage();
 		assertEquals(expectedMessage, actualMessage);
+	}
+
+	@Test
+	public void shouldHaveAllShipsGenerated() throws Exception
+	{
+		//when
+		board.fillBoard();
+
+		//then
+		assertEquals(10, board.getShipsCount());
 	}
 
 

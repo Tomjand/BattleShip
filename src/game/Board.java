@@ -7,6 +7,7 @@ import static src.game.State.OCCUPIED;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 //statek - lista pól / typ statku - ilosc masztow
 // kazde filed ma x,y, state, ship
 // strzal w board - sprawdzenie czy trafiony, zatopiony, pudlo
@@ -20,10 +21,10 @@ public class Board
 	public static final int BOARD_SIZE = 10;
 	public static final int SHIP_TYPES_COUNT = 4;
 	private final Field[][] fields = new Field[BOARD_SIZE][BOARD_SIZE];
+	private final int[] numberOfShipsByDeck = new int[SHIP_TYPES_COUNT];
 	Map<Class<? extends Ship>, Integer> myMap = new HashMap<>();
 	private int shipsCount;
 	private int submarineCount;
-	private int numberOfShipsByDeck[] = new int[SHIP_TYPES_COUNT];
 
 	public Board()
 	{
@@ -50,13 +51,34 @@ public class Board
 		System.out.print('\n');
 	}
 
-	public void fillBoard()
+	public void fillBoard() throws IllegalMoveException
 	{
-		for (int i = 0; i < BOARD_SIZE; i++)
+		final Random random = new Random();
+		for (int decks = 1; decks <= SHIP_TYPES_COUNT; decks++)
 		{
-			for (int j = 0; j < BOARD_SIZE; j++)
+
+			for (int i = 0; i < getTotalCountOfShips(decks); i++)
 			{
-				fields[i][j].setState(getRandomValue(Math.random()));
+				boolean tryAgain;
+				do
+				{
+					final int x = random.nextInt(BOARD_SIZE);
+					final int y = random.nextInt(BOARD_SIZE);
+					final WarShip.Orientation orientation = random.nextBoolean() ? WarShip.Orientation.HORIZONTAL : WarShip.Orientation.VERTICAL;
+
+					final Ship ship = getShip(decks, orientation);
+					try
+					{
+						addShip(x, y, ship);
+						tryAgain = false;
+					}
+					catch (final IllegalMoveException e)
+					{
+
+						tryAgain = true;
+						//throw new IllegalMoveException("You can't add more than " + getTotalCountOfShips(decks) + " " + ship.getClass().getSimpleName());
+					}
+				} while (tryAgain);
 			}
 		}
 	}
@@ -123,7 +145,8 @@ public class Board
 				throw new IllegalMoveException("Ship is out of the board");
 			}
 			field[i] = fields[xToSet][yToSet];
-			if (isFieldOccupied(field[i])){
+			if (isFieldOccupied(field[i]))
+			{
 				throw new IllegalMoveException("Field is occupied");
 			}
 		}
@@ -138,14 +161,16 @@ public class Board
 
 	private boolean isFieldOccupied(final Field field)
 	{
-		for (int y= field.getY()-1; y <= field.getY()+1; y++ )
-			for (int x= field.getX()-1; x <= field.getX() +1; x++ )
+		for (int y = field.getY() - 1; y <= field.getY() + 1; y++)
+			for (int x = field.getX() - 1; x <= field.getX() + 1; x++)
 			{
-				if(isOutside(x,y)){
+				if (isOutside(x, y))
+				{
 					continue;
 				}
 
-				if(fields[x][y].getState() != EMPTY){
+				if (fields[x][y].getState() != EMPTY)
+				{
 					return true;
 				}
 
@@ -186,9 +211,9 @@ public class Board
 
 	public void shot(final int x, final int y) throws IllegalMoveException
 	{
-		final Field field = getField(x,y);
+		final Field field = getField(x, y);
 
-		if(field.getState() == MISS || field.getState() == HIT || field.getState() == State.SUNK)
+		if (field.getState() == MISS || field.getState() == HIT || field.getState() == State.SUNK)
 		{
 			throw new IllegalMoveException("You can't shoot twice in the same field");
 		}
@@ -208,4 +233,20 @@ public class Board
 		}
 
 	}
+
+	private Ship getShip(final int decks, final WarShip.Orientation orientation) throws IllegalMoveException
+	{
+		return switch (decks)
+		{
+			case 1 -> new Submarine(orientation);
+			case 2 -> new Destroyer(orientation);
+			case 3 -> new Cruiser(orientation);
+			case 4 -> new BattleShip(orientation);
+			default -> throw new IllegalMoveException("Invalid ship type, decks: " + decks);
+		};
+	}
+
 }
+
+
+
