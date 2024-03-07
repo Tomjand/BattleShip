@@ -20,7 +20,7 @@ public class Field
 		switch (this.state)
 		{
 			case EMPTY:
-				return ' ';
+				return '*';
 			case SUNK:
 				return 'X';
 			case HIT:
