@@ -1,8 +1,8 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,11 +31,11 @@ public class BoardTest
 	public void shouldAddSubmarineOnField() throws IllegalMoveException
 	{
 		//when
-		board.addShip(2 , 2, new Submarine(WarShip.Orientation.HORIZONTAL));
+		board.addShip(2, 2, new Submarine(WarShip.Orientation.HORIZONTAL));
 
 		//then
 		final Field field = board.getField(2, 2);
-		assertEquals(State.OCCUPIED,field.getState());
+		assertEquals(State.OCCUPIED, field.getState());
 	}
 	//@Test
 	//public void shouldAddSubmarineOnField()
@@ -54,11 +54,11 @@ public class BoardTest
 	{
 
 		//when
-		board.addShip(7 , 7, new Destroyer(WarShip.Orientation.HORIZONTAL));
+		board.addShip(7, 7, new Destroyer(WarShip.Orientation.HORIZONTAL));
 
 		//then
 		final Field field = board.getField(8, 7);
-		assertEquals(State.OCCUPIED,field.getState());
+		assertEquals(State.OCCUPIED, field.getState());
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class BoardTest
 	{
 		//when
 		final Exception exception = assertThrows(IllegalMoveException.class,
-				() -> board.addShip(9 , 0, new Destroyer(WarShip.Orientation.HORIZONTAL)));
+				() -> board.addShip(9, 0, new Destroyer(WarShip.Orientation.HORIZONTAL)));
 
 		final String expectedMessage = "Ship is out of the board";
 		final String actualMessage = exception.getMessage();
@@ -78,12 +78,11 @@ public class BoardTest
 	public void shouldNotBeAbleToBeInContact() throws IllegalMoveException
 	{
 		//when
-		board.addShip(1 , 1, new Destroyer(WarShip.Orientation.HORIZONTAL));
+		board.addShip(1, 1, new Destroyer(WarShip.Orientation.HORIZONTAL));
 		//when
 		assertThrows(IllegalMoveException.class,
-				() -> board.addShip(3 , 1, new Destroyer(WarShip.Orientation.HORIZONTAL)));
+				() -> board.addShip(3, 1, new Destroyer(WarShip.Orientation.HORIZONTAL)));
 	}
-
 
 
 	@Test
@@ -91,10 +90,10 @@ public class BoardTest
 	{
 		//given
 
-		board.addShip(1 , 1, new Submarine(WarShip.Orientation.HORIZONTAL));
-		board.addShip(3 , 3, new Submarine(WarShip.Orientation.HORIZONTAL));
-		board.addShip(5 , 5, new Submarine(WarShip.Orientation.HORIZONTAL));
-		board.addShip(7 , 7, new Submarine(WarShip.Orientation.HORIZONTAL));
+		board.addShip(1, 1, new Submarine(WarShip.Orientation.HORIZONTAL));
+		board.addShip(3, 3, new Submarine(WarShip.Orientation.HORIZONTAL));
+		board.addShip(5, 5, new Submarine(WarShip.Orientation.HORIZONTAL));
+		board.addShip(7, 7, new Submarine(WarShip.Orientation.HORIZONTAL));
 		//when
 		final Exception exception = assertThrows(IllegalMoveException.class,
 				() -> board.addShip(9, 9, new Submarine(WarShip.Orientation.HORIZONTAL)));
@@ -108,7 +107,7 @@ public class BoardTest
 	@Test
 	public void shouldNotBeAbleToAddTwoBattleships() throws Exception
 	{
-		board.addShip(1 , 1, new BattleShip(WarShip.Orientation.HORIZONTAL));
+		board.addShip(1, 1, new BattleShip(WarShip.Orientation.HORIZONTAL));
 		//given
 
 		//when
@@ -134,7 +133,7 @@ public class BoardTest
 	public void shouldMarkHit() throws Exception
 	{
 		//given
-		board.addShip(1 , 1, new Destroyer(WarShip.Orientation.HORIZONTAL));
+		board.addShip(1, 1, new Destroyer(WarShip.Orientation.HORIZONTAL));
 		//when
 		board.shot(1, 1);
 
@@ -146,7 +145,7 @@ public class BoardTest
 	public void shouldMarkSunk() throws Exception
 	{
 		//given
-		board.addShip(1 , 1, new Destroyer(WarShip.Orientation.HORIZONTAL));
+		board.addShip(1, 1, new Destroyer(WarShip.Orientation.HORIZONTAL));
 		board.shot(1, 1);
 		//when
 		board.shot(2, 1);
@@ -160,7 +159,7 @@ public class BoardTest
 	public void shouldDecreaseShipsOnBoard() throws Exception
 	{
 		//given
-		board.addShip(1 , 1, new Submarine(WarShip.Orientation.HORIZONTAL));
+		board.addShip(1, 1, new Submarine(WarShip.Orientation.HORIZONTAL));
 
 		//when
 		board.shot(1, 1);
@@ -196,16 +195,15 @@ public class BoardTest
 	}
 
 
-
 	@Test
 	public void shouldFailToAddShipOutsideRangeX() throws Exception
 	{
 
 		//when
-		board.addShip(-1 , 0, new Submarine(WarShip.Orientation.HORIZONTAL));
+		board.addShip(-1, 0, new Submarine(WarShip.Orientation.HORIZONTAL));
 
 		//then
-		assertThrows(IllegalMoveException.class, () -> board.addShip(-1 , 0, new Submarine(WarShip.Orientation.HORIZONTAL)));
+		assertThrows(IllegalMoveException.class, () -> board.addShip(-1, 0, new Submarine(WarShip.Orientation.HORIZONTAL)));
 	}
 
 	@Test
@@ -214,10 +212,10 @@ public class BoardTest
 
 
 		//when
-		board.addShip(0 , -1, new Submarine(WarShip.Orientation.HORIZONTAL));
+		board.addShip(0, -1, new Submarine(WarShip.Orientation.HORIZONTAL));
 
 		//then
-		assertThrows(IllegalMoveException.class, () -> board.addShip(0 , -1, new Submarine(WarShip.Orientation.HORIZONTAL)));
+		assertThrows(IllegalMoveException.class, () -> board.addShip(0, -1, new Submarine(WarShip.Orientation.HORIZONTAL)));
 
 	}
 

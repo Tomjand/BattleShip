@@ -2,14 +2,9 @@ package src.game;
 
 public abstract class WarShip implements Ship
 {
-	public enum Orientation
-	{
-		HORIZONTAL, VERTICAL
-	}
+	private final Field[] occupied;
 	private Orientation orientation;
 	private int hits;
-	private final Field[] occupied;
-
 	public WarShip(final Orientation orientation)
 	{
 		this.orientation = orientation;
@@ -45,12 +40,17 @@ public abstract class WarShip implements Ship
 		this.orientation = orientation;
 	}
 
-
-
-	public void setOnField(final Field field, final int deckNumber){
+	public void setOnField(final Field field, final int deckNumber)
+	{
 		field.setShip(this);
 		field.setState(State.OCCUPIED);
 		occupied[deckNumber] = field;
+	}
+
+
+	public enum Orientation
+	{
+		HORIZONTAL, VERTICAL
 	}
 }
 

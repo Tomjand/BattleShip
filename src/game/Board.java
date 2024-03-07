@@ -211,6 +211,11 @@ public class Board
 
 	public void shot(final int x, final int y) throws IllegalMoveException
 	{
+		if (isOutside(x, y))
+		{
+			throw new IllegalMoveException("You can't shoot outside the board or bad coordinates");
+		}
+
 		final Field field = getField(x, y);
 
 		if (field.getState() == MISS || field.getState() == HIT || field.getState() == State.SUNK)
@@ -230,6 +235,11 @@ public class Board
 			{
 				shipsCount--;
 			}
+		}
+
+		if (shipsCount == 0)
+		{
+			System.out.println("You won!");
 		}
 
 	}

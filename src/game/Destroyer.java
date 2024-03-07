@@ -6,6 +6,7 @@ public class Destroyer extends WarShip
 	{
 		super(orientation);
 	}
+
 	@Override
 	public int getDecksCount()
 	{

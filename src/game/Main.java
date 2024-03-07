@@ -9,12 +9,13 @@ public class Main
 		final Board board = new Board();
 		board.fillBoard();
 
-
 		final Scanner scanner = new Scanner(System.in);
 
-		while(board.getShipsCount() > 0){
+		while (board.getShipsCount() > 0)
+		{
 			board.printBoard();
-			final String move = scanner.nextLine();
+			String move = scanner.nextLine();
+			move = move.toUpperCase();
 			final int y = move.charAt(0) - 'A';
 			final int x = move.charAt(1) - '0';
 
@@ -30,5 +31,5 @@ public class Main
 
 		}
 	}
-	
+
 }

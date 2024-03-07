@@ -34,19 +34,14 @@ public class Field
 		}
 	}
 
-	public void setShip(final Ship ship)
+	public State getState()
 	{
-		this.ship = ship;
+		return state;
 	}
 
 	public void setState(final State state)
 	{
 		this.state = state;
-	}
-
-	public State getState()
-	{
-		return state;
 	}
 
 	public int getY()
@@ -62,5 +57,10 @@ public class Field
 	public Ship getShip()
 	{
 		return ship;
+	}
+
+	public void setShip(final Ship ship)
+	{
+		this.ship = ship;
 	}
 }
